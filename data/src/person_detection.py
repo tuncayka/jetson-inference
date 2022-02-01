@@ -42,7 +42,7 @@ camera = jetson.utils.videoSource(opt.input_URI, argv=sys.argv)
 # while display.IsStreaming():
 while True:
 
-    time.sleep(1)
+    time.sleep(5)
     img = camera.Capture()
     detections = net.Detect(img, overlay=overlay)
 
