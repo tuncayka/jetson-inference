@@ -37,6 +37,7 @@ net = jetson.inference.detectNet(opt.model, threshold=opt.threshold)
 
 # create video sources
 camera = jetson.utils.videoSource(opt.input_URI, argv=sys.argv)
+#display = jetson.utils.videoOutput("display://0")
 
 # while display.IsStreaming():
 while True:
@@ -72,12 +73,13 @@ while True:
         json_detections.append(d)
         print(detection)
 
-    json['detections'] = json_detections
-    try:
-        r = requests.post(api_url, json=json)
-    except:
-        print("API Error. ")
-        pass
+    # json['detections'] = json_detections
+    if len(detections)>0:
+        try:
+            r = requests.post(api_url, json=json)
+        except:
+            print("API Error. ")
+            pass
 
     #display.Render(img)
     #display.SetStatus("Object Detection | Network {:.0f} FPS".format(net.GetNetworkFPS()))
